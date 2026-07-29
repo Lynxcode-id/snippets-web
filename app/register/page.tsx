@@ -3,9 +3,9 @@ import Link from "next/link"
 export default async function RegisterPage({
   searchParams
 }: {
-  searchParams?: { error?: string }
+  searchParams?: Promise<{ error?: string }>
 }) {
-  const params = searchParams ?? {}
+  const params = (await searchParams) ?? {}
 
   return (
     <div className="neo-shell max-w-2xl">

@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createUnlockToken, getSessionFromRequest, verifyPassword } from "@/lib/auth"
+import { createUnlockToken, getSessionFromRequest } from "@/lib/auth"
+import { verifyPassword } from "@/lib/password"
 import { getSnippetById } from "@/lib/queries"
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export const runtime = "nodejs"
+
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getSessionFromRequest(request)
-  const { id } = params
+  const { id } = await params
   const snippet = await getSnippetById(Number(id))
   if (!snippet) {
     return NextResponse.redirect(new URL("/snippets", request.url))

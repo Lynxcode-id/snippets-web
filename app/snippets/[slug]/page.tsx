@@ -16,10 +16,11 @@ export default async function SnippetDetail({
   params,
   searchParams
 }: {
-  params: { slug: string }
-  searchParams?: { error?: string }
+  params: Promise<{ slug: string }>
+  searchParams?: Promise<{ error?: string }>
 }) {
-  const { slug } = params
+  const { slug } = await params
+  const search = (await searchParams) ?? {}
   const session = await getSession()
   const snippet = await getSnippetBySlug(slug)
 
@@ -102,7 +103,7 @@ export default async function SnippetDetail({
           </span>
         </div>
 
-        {searchParams?.error ? (
+        {search?.error ? (
           <div className="mt-6 rounded-2xl border-[3px] border-black bg-[#ffefef] p-4 font-semibold">
             Password salah. Coba lagi.
           </div>

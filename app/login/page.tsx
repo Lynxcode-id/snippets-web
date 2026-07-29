@@ -3,9 +3,9 @@ import Link from "next/link"
 export default async function LoginPage({
   searchParams
 }: {
-  searchParams?: { error?: string; next?: string }
+  searchParams?: Promise<{ error?: string; next?: string }>
 }) {
-  const params = searchParams ?? {}
+  const params = (await searchParams) ?? {}
   const next = params.next ?? "/profile"
 
   return (

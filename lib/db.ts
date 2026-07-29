@@ -1,23 +1,5 @@
 import { createClient } from "@libsql/client"
 
-const url =
-  process.env.LIBSQL_URL ??
-  process.env.TURSO_DATABASE_URL ??
-  process.env.DATABASE_URL ??
-  ""
-
-const authToken =
-  process.env.LIBSQL_AUTH_TOKEN ??
-  process.env.TURSO_AUTH_TOKEN ??
-  process.env.DATABASE_AUTH_TOKEN ??
-  undefined
-
-if (!url) {
-  throw new Error(
-    "Database URL belum diset. Pakai LIBSQL_URL / TURSO_DATABASE_URL / DATABASE_URL."
-  )
-}
-
 declare global {
   // eslint-disable-next-line no-var
   var __neo_db: ReturnType<typeof createClient> | undefined
@@ -25,8 +7,44 @@ declare global {
   var __neo_schema_ready: Promise<void> | undefined
 }
 
-export const db = globalThis.__neo_db ?? createClient({ url, authToken })
-if (!globalThis.__neo_db) globalThis.__neo_db = db
+function createDbClient() {
+  const url =
+    process.env.LIBSQL_URL ??
+    process.env.TURSO_DATABASE_URL ??
+    process.env.DATABASE_URL ??
+    ""
+
+  const authToken =
+    process.env.LIBSQL_AUTH_TOKEN ??
+    process.env.TURSO_AUTH_TOKEN ??
+    process.env.DATABASE_AUTH_TOKEN ??
+    undefined
+
+  if (!url) {
+    throw new Error(
+      "Database URL belum diset. Pakai LIBSQL_URL / TURSO_DATABASE_URL / DATABASE_URL."
+    )
+  }
+
+  return createClient({ url, authToken })
+}
+
+// Lazy getter: client baru dibuat (dan env var baru divalidasi) saat
+// benar-benar dipakai di request, bukan saat module di-import waktu build.
+function getDb() {
+  if (!globalThis.__neo_db) {
+    globalThis.__neo_db = createDbClient()
+  }
+  return globalThis.__neo_db
+}
+
+export const db = new Proxy({} as ReturnType<typeof createClient>, {
+  get(_target, prop) {
+    const client = getDb()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (client as any)[prop]
+  }
+})
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS users (

@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+export const runtime = "nodejs"
+
 import { createSessionToken } from "@/lib/auth"
 import { createUser, getUserByEmail, getUserByUsername } from "@/lib/queries"
 

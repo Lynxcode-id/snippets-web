@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+export const runtime = "nodejs"
+
 import { createSnippet } from "@/lib/queries"
 import { getSessionFromRequest } from "@/lib/auth"
 
