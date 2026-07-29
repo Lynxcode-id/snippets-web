@@ -14,9 +14,9 @@ async function getSession() {
 export default async function Home({
   searchParams
 }: {
-  searchParams?: { q?: string; category?: string; language?: string }
+  searchParams?: Promise<{ q?: string; category?: string; language?: string }>
 }) {
-  const params = searchParams ?? {}
+  const params = (await searchParams) ?? {}
   const session = await getSession()
 
   const snippets = await listSnippets({
