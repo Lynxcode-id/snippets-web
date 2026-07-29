@@ -19,7 +19,6 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.18.2",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",

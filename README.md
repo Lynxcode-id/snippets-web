@@ -1,6 +1,6 @@
 # Lynx Labs — Snippet Vault
 
-Next.js + SQLite-compatible snippet web appp dengan:
+Next.js + SQLite-compatible snippet web app dengan:
 - akun register/login
 - create snippet
 - public/private snippet
