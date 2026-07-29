@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 import { db, ensureSchema } from "./db"
-import { hashPassword, verifyPassword } from "./password"
+import { hashPassword, verifyPassword } from "./auth"
 import { normalizeList, slugify } from "./utils"
 
 export const CATEGORIES = [
