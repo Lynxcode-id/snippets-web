@@ -6,7 +6,7 @@ import "./globals.css"
 import { getSessionFromCookieHeader } from "@/lib/auth"
 
 export const metadata: Metadata = {
-  title: "NeoSoft Labs — Snippets",
+  title: "Lynx Labs — Snippets",
   description: "Snippet vault bergaya komunitas dengan akun, password snippet, dan SQLite-compatible database."
 }
 
@@ -34,7 +34,7 @@ export default async function RootLayout({
                   <Code2 className="h-5 w-5" />
                 </span>
                 <div>
-                  <div className="text-lg font-black leading-none sm:text-2xl">NeoSoft Labs</div>
+                  <div className="text-lg font-black leading-none sm:text-2xl">Lynx Labs</div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-zinc-600">
                     Community Snippet Vault
                   </div>

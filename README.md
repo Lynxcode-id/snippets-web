@@ -1,4 +1,4 @@
-# NeoSoft Labs — Snippet Vault
+# Lynx Labs — Snippet Vault
 
 Next.js + SQLite-compatible snippet web app dengan:
 - akun register/login
